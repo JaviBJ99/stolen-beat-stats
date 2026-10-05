@@ -78,7 +78,9 @@
   <button onclick="showTab('buscargenero',this)">Search by genre</button>
 </nav>
 <div id="decadas" class="section active"><div class="card"><h2>Albums by decade</h2><canvas id="chartDecadas"></canvas></div></div>
-<div id="generos" class="section"><div class="card"><h2>Top 30 genres</h2><div style="position:relative;height:900px"><canvas id="chartGeneros"></canvas></div></div></div>
+<div id="generos" class="section"><div class="card"><h2>Top 30 genres</h2>
+  <div id="genreTable"></div>
+</div></div>
 <div id="artistas" class="section"><div class="card"><h2>Artists with most albums</h2><canvas id="chartArtistas"></canvas></div></div>
 <div id="buscar" class="section"><div class="card"><h2>Search album</h2>
   <input class="search-box" type="text" placeholder="Artist or album..." id="searchInput" oninput="searchDiscos(this.value)">
@@ -108,8 +110,15 @@ function showTab(id,btn){
 Chart.defaults.color='#777'; Chart.defaults.borderColor='#2e2e2e';
 Chart.defaults.font.family="-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif";
 new Chart(document.getElementById('chartDecadas'),{type:'bar',data:{labels:DATA.decades.map(d=>d.decade),datasets:[{data:DATA.decades.map(d=>d.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{y:{grid:{color:'#222'},ticks:{precision:0}},x:{grid:{display:false}}}}});
-new Chart(document.getElementById('chartGeneros'),{type:'bar',data:{labels:DATA.genres.map(g=>g.name),datasets:[{data:DATA.genres.map(g=>g.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{x:{grid:{color:'#222'},ticks:{precision:0}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
 new Chart(document.getElementById('chartArtistas'),{type:'bar',data:{labels:DATA.artists.map(a=>a.name),datasets:[{data:DATA.artists.map(a=>a.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{x:{grid:{color:'#222'},ticks:{precision:0}},y:{grid:{display:false},ticks:{font:{size:11}}}}}});
+// Tabla de géneros
+const genreRows = DATA.genres.map((g,i) => `
+  <div class="result-item">
+    <div class="result-main"><strong>${g.name}</strong></div>
+    <div class="result-year">${g.count} albums</div>
+  </div>`).join('');
+document.getElementById('genreTable').innerHTML = genreRows;
+
 function searchDiscos(q){
   const results=document.getElementById('resultsDiscos');
   q=q.trim().toLowerCase();
