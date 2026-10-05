@@ -49,6 +49,11 @@
   .genre-tag:hover { border-color: var(--red); color: var(--red); }
   .genre-tag.active { background: var(--red); border-color: var(--red); color: white; }
   .genre-search { margin-bottom: 1rem; }
+  .channel-banner { margin: 1.5rem 2rem 0; background: #111; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; }
+  .channel-banner p { font-size: 0.85rem; color: var(--muted); }
+  .channel-banner a { display: inline-flex; align-items: center; gap: 6px; background: var(--red); color: white; border-radius: 6px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; text-decoration: none; white-space: nowrap; transition: opacity 0.15s; }
+  .channel-banner a:hover { opacity: 0.85; }
+  .channel-banner svg { width: 14px; height: 14px; }
 </style>
 </head>
 <body>
@@ -57,6 +62,13 @@
   <h1>The Stolen <span>Beat</span></h1>
   <div class="header-right"><span class="total-badge" id="total">0 albums</span></div>
 </header>
+<div class="channel-banner">
+  <p>Join the channel and discover a new album every day</p>
+  <a href="https://t.me/thestolenbeat" target="_blank">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.248-1.97 9.289c-.145.658-.537.818-1.084.508l-3-2.21-1.447 1.394c-.16.16-.295.295-.605.295l.213-3.053 5.56-5.023c.242-.213-.054-.333-.373-.12L7.48 14.013l-2.95-.924c-.641-.203-.654-.641.136-.953l11.57-4.461c.537-.194 1.006.131.326.573z"/></svg>
+    Join on Telegram
+  </a>
+</div>
 <div class="disco-del-dia" id="discoDia"></div>
 <nav>
   <button class="active" onclick="showTab('decadas',this)">Decades</button>
