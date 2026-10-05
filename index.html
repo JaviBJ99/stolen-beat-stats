@@ -77,6 +77,8 @@
   .modal-link:hover { border-color: var(--red); color: var(--red); }
   .modal-link span { color: var(--muted); font-size: 0.75rem; }
   .modal-no-links { color: var(--muted); font-size: 0.85rem; }
+  .modal-cover { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 8px; margin-bottom: 1rem; background: var(--surface2); }
+  .modal-cover-placeholder { width: 100%; aspect-ratio: 1; background: var(--surface2); border-radius: 8px; margin-bottom: 1rem; display: flex; align-items: center; justify-content: center; color: var(--muted); font-size: 2rem; }
 </style>
 </head>
 <body>
@@ -85,6 +87,7 @@
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modalCover"></div>
     <div class="modal-title" id="modalTitle"></div>
     <div class="modal-meta" id="modalMeta"></div>
     <div class="modal-genres" id="modalGenres"></div>
@@ -177,7 +180,7 @@ const PLATFORM_LABELS = {
   tidal: 'Tidal', amazonMusic: 'Amazon Music', youtubeMusic: 'YouTube Music'
 };
 
-function openModalForDisco(d) {
+async function openModalForDisco(d) {
   if (!d) return;
   document.getElementById('modalTitle').textContent = d.artist + ' — ' + d.album;
   document.getElementById('modalMeta').textContent = d.year || '—';
@@ -188,6 +191,20 @@ function openModalForDisco(d) {
     ? keys.map(k => `<a class="modal-link" href="${links[k]}" target="_blank">${PLATFORM_LABELS[k] || k}<span>→</span></a>`).join('')
     : '<p class="modal-no-links">No links available</p>';
   document.getElementById('modalOverlay').classList.add('open');
+
+  // Cargar portada desde Last.fm
+  const coverEl = document.getElementById('modalCover');
+  coverEl.innerHTML = '<div class="modal-cover-placeholder">🎵</div>';
+  try {
+    const url = `https://ws.audioscrobbler.com/2.0/?method=album.getinfo&artist=${encodeURIComponent(d.artist)}&album=${encodeURIComponent(d.album)}&api_key=1f9a4d160a4a43e180657ae56b2d3c48&format=json`;
+    const res = await fetch(url);
+    const data = await res.json();
+    const images = data.album?.image || [];
+    const img = [...images].reverse().find(i => i['#text']);
+    if (img) {
+      coverEl.innerHTML = `<img class="modal-cover" src="${img['#text']}" alt="cover">`;
+    }
+  } catch(e) { /* sin portada */ }
 }
 
 function closeModal(e) {
