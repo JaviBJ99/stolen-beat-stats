@@ -280,9 +280,17 @@ function renderGenreTags(filter) {
   const genres = filter
     ? DATA.all_genres.filter(g => g.name.toLowerCase().includes(filter.toLowerCase()))
     : DATA.all_genres;
-  container.innerHTML = genres.slice(0, 100).map(g =>
-    `<span class="genre-tag" onclick="selectGenre('${g.name.replace(/'/g, "\'")}')">${g.name} <span style="opacity:0.5">${g.count}</span></span>`
-  ).join('');
+  const counts = genres.map(g => g.count);
+  const minCount = Math.min(...counts);
+  const maxCount = Math.max(...counts);
+  const minSize = 0.75;
+  const maxSize = 1.4;
+  container.innerHTML = genres.slice(0, 100).map(g => {
+    const size = maxCount > minCount
+      ? minSize + (g.count - minCount) / (maxCount - minCount) * (maxSize - minSize)
+      : 1;
+    return `<span class="genre-tag" onclick="selectGenre('${g.name.replace(/'/g, "\'")}') " style="font-size:${size.toFixed(2)}rem">${g.name} <span style="opacity:0.5">${g.count}</span></span>`;
+  }).join('');
 }
 
 function filterGenres(q) {
