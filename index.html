@@ -273,7 +273,7 @@ Chart.defaults.font.family = "-apple-system,BlinkMacSystemFont,'Segoe UI',sans-s
 new Chart(document.getElementById('chartDecadas'), {type:'bar',data:{labels:DATA.decades.map(d=>d.decade),datasets:[{data:DATA.decades.map(d=>d.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{y:{grid:{color:'#222'},ticks:{precision:0}},x:{grid:{display:false}}}}});
 
 const anyosTickLimit = isMobile ? 10 : 30;
-new Chart(document.getElementById('chartAnyos'),{type:'bar',data:{labels:DATA.years.map(y=>y.year),datasets:[{data:DATA.years.map(y=>y.count),backgroundColor:'#b03020',borderRadius:3,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{y:{grid:{color:'#222'},ticks:{precision:0}},x:{grid:{display:false},ticks:{maxRotation:45,font:{size:10},maxTicksLimit:anyosTickLimit}}}}}}}});
+new Chart(document.getElementById('chartAnyos'),{type:'bar',data:{labels:DATA.years.map(y=>y.year),datasets:[{data:DATA.years.map(y=>y.count),backgroundColor:'#b03020',borderRadius:3,borderSkipped:false}]},options:{responsive:true,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{y:{grid:{color:'#222'},ticks:{precision:0}},x:{grid:{display:false},ticks:{maxRotation:45,font:{size:10},maxTicksLimit:anyosTickLimit}}}}});
 
 const COLORS = ['#b03020','#3d7abf','#2ea87e','#e08020','#7c5cbf','#c0392b','#16a085','#8e44ad'];
 new Chart(document.getElementById('chartEvolucion'),{type:'line',data:{labels:DATA.evolution.years,datasets:DATA.evolution.genres.map((g,i)=>({label:g,data:DATA.evolution.data[g],borderColor:COLORS[i%COLORS.length],backgroundColor:'transparent',tension:0.3,pointRadius:3}))},options:{responsive:true,plugins:{legend:{position:'bottom',labels:{font:{size:11},color:'#888'}},tooltip:{mode:'index',intersect:false}},scales:{y:{grid:{color:'#222'},ticks:{precision:0}},x:{grid:{display:false}}}}});
@@ -282,7 +282,7 @@ const artistRowH = isMobile ? 28 : 22;
 const artistFontSz = isMobile ? 10 : 11;
 const artistCanvasEl = document.getElementById('chartArtistas');
 artistCanvasEl.style.height = (DATA.artists.length * artistRowH) + 'px';
-new Chart(artistCanvasEl, {type:'bar',data:{labels:DATA.artists.map(a=>a.name),datasets:[{data:DATA.artists.map(a=>a.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{x:{grid:{color:'#222'},ticks:{precision:0}},y:{grid:{display:false},ticks:{font:{size:artistFontSz}}}}}}}}});
+new Chart(artistCanvasEl, {type:'bar',data:{labels:DATA.artists.map(a=>a.name),datasets:[{data:DATA.artists.map(a=>a.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{x:{grid:{color:'#222'},ticks:{precision:0}},y:{grid:{display:false},ticks:{font:{size:artistFontSz}}}}}});
 
 // Genre table
 document.getElementById('genreTable').innerHTML = DATA.genres.map(g =>
