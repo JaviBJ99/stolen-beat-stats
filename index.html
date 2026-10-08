@@ -176,7 +176,7 @@
   <div id="decadas" class="subsection active"><div class="card"><h2>Albums by decade</h2><canvas id="chartDecadas"></canvas></div></div>
   <div id="anyos" class="subsection"><div class="card"><h2>Albums by year</h2><canvas id="chartAnyos"></canvas></div></div>
   <div id="generos" class="subsection"><div class="card"><h2>Top 30 genres</h2><div id="genreTable"></div></div></div>
-  <div id="artistas" class="subsection"><div class="card"><h2>Artists with most albums</h2><canvas id="chartArtistas"></canvas></div></div>
+  <div id="artistas" class="subsection"><div class="card"><h2>Artists with most albums</h2><div id="artistWrap" style="position:relative;width:100%"><canvas id="chartArtistas"></canvas></div></div></div>
   <div id="evolucion" class="subsection"><div class="card"><h2>Top 8 genres published over time</h2><canvas id="chartEvolucion"></canvas></div></div>
 </div>
 
@@ -281,7 +281,7 @@ new Chart(document.getElementById('chartEvolucion'),{type:'line',data:{labels:DA
 const artistRowH = isMobile ? 28 : 22;
 const artistFontSz = isMobile ? 10 : 11;
 const artistCanvasEl = document.getElementById('chartArtistas');
-artistCanvasEl.style.height = (DATA.artists.length * artistRowH) + 'px';
+document.getElementById('artistWrap').style.height = (DATA.artists.length * artistRowH + 40) + 'px';
 new Chart(artistCanvasEl, {type:'bar',data:{labels:DATA.artists.map(a=>a.name),datasets:[{data:DATA.artists.map(a=>a.count),backgroundColor:'#b03020',borderRadius:4,borderSkipped:false}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw} albums`}}},scales:{x:{grid:{color:'#222'},ticks:{precision:0}},y:{grid:{display:false},ticks:{font:{size:artistFontSz}}}}}});
 
 // Genre table
